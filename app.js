@@ -9,11 +9,21 @@
 
 
 const http = require('http');
-const routes = require('./routes');
 
+const express = require('express')
 
+const app = express();
 
-console.log(routes.someText);  // Assuming 'someText' is defined in routes.js
+app.use((req, res, next) => {
+  console.log('In middleware!');
+  next();
+});
 
-const server = http.createServer(routes. handler);
+app.use((req, res, next) => {
+  console.log('In another middleware!');
+  //......
+});
+
+const server = http.createServer(app);
+
 server.listen(2000);
