@@ -5,33 +5,37 @@
 
 // const server = http.createServer(routes, handler);
 // server.listen(2000); 
+
+
 const express = require('express');
+const bodyParser = require('body-parser');
+
+// Create the app instance before using it
 const app = express();
 
+app.use(bodyParser.urlencoded({ extended: false }));
 
-
-const http = require('http');
-
-;
-
-app.use('/',(req, res, next) => {
+app.use('/', (req, res, next) => {
   console.log('In another middleware!');
   res.send('Hello World from Express');
-  //......
+  // ......
 });
 
-app.use('/add-product',(req, res, next) => {
+app.use('/add-product', (req, res, next) => {
   console.log('This always runs!');
-  res.send('<form action="/product" method="POST"><input type="text" name= "title"><button type="submit">Add Product</form>');
-  //......
+  res.send('<form action="/product" method="POST"><input type="text" name="title"><button type="submit">Add Product</button></form>');
+  // ......
 });
+
 app.use('/product', (req, res, next) => {
   console.log(req.body);
   res.redirect('/');
 })
 
+// Require the http module
+const http = require('http');
 
-
+// Create the server using http.createServer(app)
 const server = http.createServer(app);
 
-server.listen(1100);
+server.listen(8080);
