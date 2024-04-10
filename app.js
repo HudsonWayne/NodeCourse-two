@@ -14,16 +14,24 @@ const express = require('express')
 
 const app = express();
 
-app.use((req, res, next) => {
-  console.log('In middleware!');
-  next();
-});
-
-app.use((req, res, next) => {
+app.use('/',(req, res, next) => {
   console.log('In another middleware!');
+  res.send('Hello World from Express');
   //......
 });
 
+app.use('/add-product',(req, res, next) => {
+  console.log('This always runs!');
+  res.send('<form action="/product" method="POST"><input type="text" name= "title"><button type="submit">Add Product</form>');
+  //......
+});
+app.use('/product', (req, res, next) => {
+  console.log(req.body);
+  res.redirect('/');
+})
+
+
+
 const server = http.createServer(app);
 
-server.listen(2000);
+server.listen(1100);
