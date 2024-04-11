@@ -63,11 +63,11 @@ app.use('/add-product', (req, res, next) => {
 });
 
 // Route for handling product submission (assuming you have logic for saving the product)
-app.use('/product', (req, res, next) => {
-  const { title } = req.body; // Destructure title from request body (assuming the name is "title")
-  console.log(`Product title submitted: ${title}`); // Log the submitted title
-  res.redirect('/'); // Redirect back to the home page
-});
+ app.use('/product', (req, res, next) => {
+   console.log(req.body);
+   res.redirect('/');
+   
+ })
 
 // Route for the home page
 app.use('/', (req, res, next) => {
