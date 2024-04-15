@@ -40,15 +40,30 @@
 
 // server.listen(8080);
 const http = require('http');
+
 const bodyParser = require('body-parser'); // Assuming Express version below 4.16
 
 const express = require('express');
 
+const adminRoutes = require('./routes/admin.js');
+const shopRoutes = require('./routes/shop.js');
+
 // Create the Express app instance before using it in middleware
 const app = express();
 
+
+
 // Set up middleware for parsing form data (if using older Express versions)
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(adminRoutes);
+app.use(shopRoutes);
+
+
+app.use((req,res, next)=>{
+  res.status(404).send('<h1>Page not found</h1');
+});
+
 
 // Middleware that always runs
 app.use('/', (req, res, next) => {
@@ -56,34 +71,9 @@ app.use('/', (req, res, next) => {
   next();
 });
 
-// Route for displaying the product form
-app.use('/add-product', (req, res, next) => {
-  console.log('In another middleware');
-  res.send('<form action="/product" method="POST"><input type="text" name="title"><button type="submit">Add Product</button></form>');
-});
-
-// Route for handling product submission (assuming you have logic for saving the product)
- app.use('/product', (req, res, next) => {
-   console.log(req.body);
-   res.redirect('/');
-   
- })
-
-// Route for the home page
-app.use('/', (req, res, next) => {
-  console.log('In another middleware');
-  res.send('<h1>Hello from Node</h1>');
-});
 
 // Create and start the server
 const server = http.createServer(app);
 
 server.listen(7000)
 
-// server.listen(7000, (err) => { // Added error handling
-//   if (err) {
-//     console.error('Error starting server:', err);
-//   } else {
-//     console.log('Server listening on port 7000');
-//   }
-// });
