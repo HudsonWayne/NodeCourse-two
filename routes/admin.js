@@ -8,7 +8,7 @@ const router = express.Router();
 // Route for displaying the product form
 router.get('/add-product', (req, res, next) => {
    
-    res.sendFile(path.join(__dirname, '../', 'views', 'add-product.html'));
+    res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
 });
   
   // Route for handling product submission (assuming you have logic for saving the product)
