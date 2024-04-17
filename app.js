@@ -56,6 +56,8 @@ const app = express();
 
 // Set up middleware for parsing form data (if using older Express versions)
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use('/admin',adminRoutes);
 app.use(shopRoutes);
