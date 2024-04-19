@@ -51,7 +51,8 @@ const shopRoutes = require('./routes/shop.js');
 
 // Create the Express app instance before using it in middleware
 const app = express();
-app.set();
+app.set('view engine', 'pug');
+app.set('views', 'views');
 
 
 
