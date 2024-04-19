@@ -46,11 +46,12 @@ const bodyParser = require('body-parser'); // Assuming Express version below 4.1
 
 const express = require('express');
 
-const adminRoutes = require('./routes/admin.js');
+const adminData = require('./routes/admin.js');
 const shopRoutes = require('./routes/shop.js');
 
 // Create the Express app instance before using it in middleware
 const app = express();
+app.set();
 
 
 
@@ -59,7 +60,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/admin',adminRoutes);
+app.use('/admin ',adminData.routes);
 app.use(shopRoutes);
 
 
