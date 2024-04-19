@@ -39,46 +39,27 @@
 // const server = http.createServer(app);
 
 // server.listen(8080);
-const path = require('path')
-const http = require('http');
-
-const bodyParser = require('body-parser'); // Assuming Express version below 4.16
+const path = require('path');
 
 const express = require('express');
+const bodyParser = require('body-parser');
 
-const adminData = require('./routes/admin.js');
-const shopRoutes = require('./routes/shop.js');
-
-// Create the Express app instance before using it in middleware
 const app = express();
+
 app.set('view engine', 'pug');
 app.set('views', 'views');
 
+const adminData = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
 
-
-// Set up middleware for parsing form data (if using older Express versions)
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-app.use('/admin ',adminData.routes);
+app.use('/admin', adminData.routes);
 app.use(shopRoutes);
 
-
-app.use((req,res, next)=>{
-  res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
+app.use((req, res, next) => {
+    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
 });
 
-
-// Middleware that always runs
-app.use('/', (req, res, next) => {
-  console.log('This always runs!');
-  next();
-});
-
-
-// Create and start the server
-const server = http.createServer(app);
-
-server.listen(7000)
-
+app.listen(7000);
